@@ -45,6 +45,6 @@ One of the standout features of this project is its ability to adapt dynamically
        <p>Additional content for Section 4.</p>
      </div>
    </section>
-=======
+
 # Project2UdacityLandingPage
 >>>>>>> 0b4c546d42666bbbcbf7be3771cb61c34a395e02
