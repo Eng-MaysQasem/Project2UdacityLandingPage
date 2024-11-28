@@ -46,5 +46,4 @@ One of the standout features of this project is its ability to adapt dynamically
      </div>
    </section>
 
-# Project2UdacityLandingPage
->>>>>>> 0b4c546d42666bbbcbf7be3771cb61c34a395e02
+
