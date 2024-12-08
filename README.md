@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> e30570bfd02dc1e4a70adef2448f9bffaf66019c
 # Dynamic Landing Page Project
 
 This project is an interactive and dynamic **Landing Page** built using **HTML**, **CSS**, and **JavaScript**. The purpose of the project is to create a user-friendly and responsive webpage that updates itself dynamically based on the content. The landing page was designed to demonstrate skills in DOM manipulation, event handling, and responsive design.
@@ -49,7 +46,4 @@ One of the standout features of this project is its ability to adapt dynamically
      </div>
    </section>
 
-<<<<<<< HEAD
-=======
 
->>>>>>> e30570bfd02dc1e4a70adef2448f9bffaf66019c
