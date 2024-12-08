@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Dynamic Landing Page Project
 
 This project is an interactive and dynamic **Landing Page** built using **HTML**, **CSS**, and **JavaScript**. The purpose of the project is to create a user-friendly and responsive webpage that updates itself dynamically based on the content. The landing page was designed to demonstrate skills in DOM manipulation, event handling, and responsive design.
@@ -45,6 +44,4 @@ One of the standout features of this project is its ability to adapt dynamically
        <p>Additional content for Section 4.</p>
      </div>
    </section>
-=======
-# Project2UdacityLandingPage
->>>>>>> 0b4c546d42666bbbcbf7be3771cb61c34a395e02
+
