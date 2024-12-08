@@ -1,78 +1,77 @@
-document.addEventListener("DOMContentLoaded", function() {
-  // Declaring the variables that we will need later in the code
-  const navbar = document.querySelector('.page__header'); // Select the navigation bar element
-  const navbarList = document.getElementById("navbar__list"); // Select the unordered list inside the navigation bar
-  const sections = document.querySelectorAll("section"); // Select all section elements on the page
-
-  // Dynamically build the navigation bar by adding list items for each section on the page
-  sections.forEach(section => {
-    const navItem = document.createElement('li'); // Create a new list item
-    const navLink = document.createElement('a'); // Create a new anchor link
-    navLink.href = `#${section.id}`; // Set the href attribute to link to the section using its ID
-    navLink.textContent = section.getAttribute('data-nav'); // Set the link text to the value of the 'data-nav' attribute of the section
-    navItem.appendChild(navLink); // Append the anchor link to the list item
-    navbarList.appendChild(navItem); // Append the list item to the navigation bar
-  });
-
-  // Function to highlight the active section based on the scroll position
-  function activateSection() {
-    const scrollPosition = window.scrollY; // Get the current scroll position of the window
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop; // Get the top offset of the section
-      const sectionHeight = section.clientHeight; // Get the height of the section
-      const link = document.querySelector(`a[href="#${section.id}"]`); // Select the corresponding link for the section
-      
-      // Check if the section is in the viewport
-      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-        section.classList.add("active-section"); // Add an active class to the section
-        link.classList.add("active-link"); // Add an active class to the corresponding link
+document.addEventListener("DOMContentLoaded", () => {
+    // Define variables for the navigation bar, list, and sections
+    const navbar = document.querySelector('.page__header'); // Select the navigation bar element
+    const navbarList = document.getElementById("navbar__list"); // Select the unordered list inside the navigation bar
+    const sections = Array.from(document.querySelectorAll("section")); // Convert NodeList to an array for easier manipulation
+  
+    // Dynamically build the navigation bar based on the sections
+    sections.forEach(section => {
+      const navItem = document.createElement('li'); // Create a new list item for each section
+      // The `section.dataset.nav` refers to the value stored in the `data-nav` attribute of each section
+      const navLink = `<a href="#${section.id}" class="menu__link">${section.dataset.nav}</a>`; // Create an anchor link with the section's ID and name
+      navItem.innerHTML = navLink; // Add the anchor link inside the list item
+      navbarList.appendChild(navItem); // Append the list item to the navigation bar
+    });
+  
+    // Function to highlight the active section based on scroll position
+    const highlightActiveSection = () => {
+      const scrollPos = window.scrollY; // Get the current scroll position
+      sections.forEach(section => {
+        const { top, height } = section.getBoundingClientRect(); // Get the position and height of the section relative to the viewport
+        const link = document.querySelector(`a[href="#${section.id}"]`); // Select the corresponding link for the section
+  
+        // Check if the section is within the viewport (visible on screen)
+        if (top >= 0 && top < window.innerHeight / 2) {
+          section.classList.add("active-section"); // Add an active class to the section
+          link.classList.add("active-link"); // Add an active class to the corresponding link
+        } else {
+          section.classList.remove("active-section"); // Remove the active class from the section
+          link.classList.remove("active-link"); // Remove the active class from the corresponding link
+        }
+      });
+    };
+  
+    // Show or hide the navigation bar on scroll based on how far you've scrolled
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 50) { // If scrolled down more than 50px
+        navbar.style.top = "0"; // Show the navbar at the top of the page
       } else {
-        section.classList.remove("active-section"); // Remove the active class from the section
-        link.classList.remove("active-link"); // Remove the active class from the corresponding link
+        navbar.style.top = "-60px"; // Hide the navbar
+      }
+      highlightActiveSection(); // Update the active section as you scroll
+    });
+  
+    // Initial call to set the active section on page load
+    highlightActiveSection();
+  
+    // Smooth scroll to the corresponding section when a navigation link is clicked
+    navbarList.addEventListener('click', event => {
+      if (event.target.tagName === 'A') { // Check if the clicked element is an anchor link
+        event.preventDefault(); // Prevent the default anchor behavior
+        const sectionID = event.target.getAttribute('href').substring(1); // Get the section ID from the link
+        const targetSection = document.getElementById(sectionID); // Get the corresponding section element
+        targetSection.scrollIntoView({ behavior: 'smooth' }); // Smoothly scroll to the section
       }
     });
-  }
-
-  // Add scroll event listener to show the navbar when scrolling
-  window.addEventListener("scroll", function() {
-    if (window.scrollY > 50) {  // Show the navbar if the user scrolls 50px or more
-      navbar.style.top = "0";
-    } else {
-      navbar.style.top = "-60px";  // Hide the navbar if the scroll position is at the top
-    }
-    activateSection(); // Call the activateSection function to update the active section
-  });
-
-  // Initial call to set the active section on page load
-  activateSection();
   
-  // Smooth scroll to the corresponding section when a navigation link is clicked
-  navbarList.addEventListener('click', event => {
-    event.preventDefault(); // Prevent the default anchor behavior (jumping)
-    if (event.target.nodeName === 'A') { // Check if the clicked element is an anchor link
-      const sectionID = event.target.getAttribute('href').substring(1); // Get the section ID from the link
-      const section = document.getElementById(sectionID); // Get the corresponding section element
-      section.scrollIntoView({ behavior: 'smooth' }); // Scroll to the section smoothly
-    }
+    // Create a scroll-to-top button
+    const scrollToTopButton = document.createElement('button'); // Create the button element
+    scrollToTopButton.textContent = '↑ Top'; // Set the button text
+    scrollToTopButton.classList.add('scroll-to-top'); // Add a class to style the button
+    document.body.appendChild(scrollToTopButton); // Append the button to the body
+  
+    // Show or hide the scroll-to-top button based on scroll position
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) { // If scrolled down more than 500px
+        scrollToTopButton.style.display = 'block'; // Show the button
+      } else {
+        scrollToTopButton.style.display = 'none'; // Hide the button
+      }
+    });
+  
+    // Scroll to the top when the button is clicked
+    scrollToTopButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // Smoothly scroll to the top of the page
+    });
   });
-
-  // Scroll-to-top button functionality
-  const scrollToTopBtn = document.createElement('button'); // Create the scroll-to-top button
-  scrollToTopBtn.textContent = '↑ Top'; // Set the button text
-  scrollToTopBtn.classList.add('scroll-to-top'); // Add a class to style the button
-  document.body.appendChild(scrollToTopBtn); // Append the button to the body
-
-  // Show or hide the scroll-to-top button based on the scroll position
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 500) { // Show the button when the user scrolls down 500px or more
-      scrollToTopBtn.style.display = 'block';
-    } else {
-      scrollToTopBtn.style.display = 'none'; // Hide the button when the user is near the top
-    }
-  });
-
-  // Scroll to the top when the button is clicked
-  scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Smoothly scroll to the top of the page
-  });
-});
+  
